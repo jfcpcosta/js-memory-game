@@ -17,7 +17,6 @@
 
     function createBoard() {
         generateCards();
-        shuffle();
 
         pairs = 0;
         container.innerHTML = '';
@@ -64,9 +63,9 @@
             pairs++;
             verifyEnd();
         } else {
-            let auxCard1 = turnCard1;
-            let auxCard2 = turnCard2;
-            let timer = setTimeout(() => {
+            const auxCard1 = turnCard1;
+            const auxCard2 = turnCard2;
+            setTimeout(() => {
                 auxCard1.classList.remove('hover');
                 auxCard2.classList.remove('hover');
 
@@ -98,6 +97,8 @@
             board.push(card);
             board.push(card);
         }
+
+        shuffle();
     }
 
     function shuffle() {
