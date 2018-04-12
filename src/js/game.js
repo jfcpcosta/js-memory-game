@@ -10,6 +10,7 @@
         's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 'sa', 'sj', 'sk', 's2'
     ];
     const board = [];
+    let pairs;
 
     let turnCard1;
     let turnCard2;
@@ -18,6 +19,8 @@
         generateCards();
         shuffle();
 
+        pairs = 0;
+        container.innerHTML = '';
         board.forEach((card, index) => {
             const node = `
                 <div class="flip-container" data-index="${index}">
@@ -40,6 +43,49 @@
 
     function toggleCard(event) {
         event.currentTarget.classList.add('hover');
+
+        if (turnCard1) {
+            turnCard2 = event.currentTarget;
+            verifyPair();
+        } else {
+            turnCard1 = event.currentTarget;
+        }
+    }
+
+    function verifyPair() {
+
+        const card1Index = turnCard1.dataset.index;
+        const card2Index = turnCard2.dataset.index;
+
+        if (board[card1Index] == board[card2Index]) {
+            turnCard1.removeEventListener('click', toggleCard, false);
+            turnCard2.removeEventListener('click', toggleCard, false);
+
+            pairs++;
+
+            turnCard1 = null;
+            turnCard2 = null;
+
+            verifyEnd();
+        } else {
+            let timer = setTimeout(() => {
+                turnCard1.classList.remove('hover');
+                turnCard2.classList.remove('hover');
+
+                turnCard1 = null;
+                turnCard2 = null;
+            }, 2000);
+        }
+
+    }
+
+    function verifyEnd() {
+        if (pairs == 6) {
+            alert('You win!');
+            if (confirm('New game?')) {
+                createBoard();
+            }
+        }
     }
 
     function generateCards() {
@@ -63,5 +109,6 @@
         }
     }
 
+    document.querySelector('#newGameButton').addEventListener('click', createBoard, false);
     createBoard();
 })();
