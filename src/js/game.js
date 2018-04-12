@@ -62,21 +62,19 @@
             turnCard2.removeEventListener('click', toggleCard, false);
 
             pairs++;
-
-            turnCard1 = null;
-            turnCard2 = null;
-
             verifyEnd();
         } else {
+            let auxCard1 = turnCard1;
+            let auxCard2 = turnCard2;
             let timer = setTimeout(() => {
-                turnCard1.classList.remove('hover');
-                turnCard2.classList.remove('hover');
+                auxCard1.classList.remove('hover');
+                auxCard2.classList.remove('hover');
 
-                turnCard1 = null;
-                turnCard2 = null;
             }, 2000);
         }
 
+        turnCard1 = null;
+        turnCard2 = null;
     }
 
     function verifyEnd() {
